@@ -1,20 +1,18 @@
 from Model.Vehicle import Vehicle
+from Model.Car import Car
 from enum import IntEnum
+from Model.Car import Transmission
 
-class Transmission(IntEnum):
-    AUTOMATIC = 1
-    MANUAL = 2
-
-class Car(Vehicle):
+class AcuraNSX(Car):
     def __init__(
             self, 
-            name, 
-            color: str = "black", 
-            speed: float = 1., 
-            width: float = 100.,
-            height: float = 100.,
-            num_doors: int = 4, 
-            transmission: Transmission = Transmission.AUTOMATIC,
+            name: str = "Acura NSX", 
+            color: str = "red", 
+            speed: float = 5, 
+            width: float = 156., 
+            height: float = 200.,
+            num_doors: int = 2, 
+            transmission: Transmission = Transmission.MANUAL,
             *args,
             **kwargs,
         ):
@@ -30,7 +28,7 @@ class Car(Vehicle):
         )
         self.num_doors = num_doors
         self.transmission = transmission
-
+        self.image_path = "assets/NSX.png"
     def __str__(self):
         return super().__str__() + " " + str(self.num_doors) + " " + str(self.transmission)
 
@@ -48,17 +46,4 @@ class Car(Vehicle):
         """
         self.x = x
         self.y = y
-
-    def drive(self, x: list[float], y: list[float], theta: list[float], callback: callable):
-        if len(x) != len(y) != len(theta):
-            raise ValueError('x,y,theta are not of equal length.')
-        for index in range(len(x)):
-            i = x[index]
-            j = y[index]
-            t = theta[index]
-            self.move(i*self.speed,j*self.speed,0)
-            self.turn(t,0)
-            callback()
-        
-        
 

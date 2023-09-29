@@ -70,3 +70,14 @@ class DGCar(Canvas):
         rotated = self.car_image.rotate(-self.radians_to_degrees(self.car.theta), resample=Image.BICUBIC)
         self.rendered_car = ImageTk.PhotoImage(rotated)
         self.car_label.configure(image=self.rendered_car)
+    def drift(self):
+        radians = np.linspace(0,math.pi/2,400)
+        degrees = [i for i in range(0,400)]
+        for r in radians:
+            degrees.append(self.radians_to_degrees(r))
+        x = []
+        y = []
+        for i in range(len(radians)):
+            x.append(i/30*math.cos(radians[i]))
+            y.append(i/30*math.sin(radians[i]))
+        self.car.drive(x,y,radians,self.draw) 
